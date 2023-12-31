@@ -16,9 +16,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: dashboard.php');
         exit();
     } else {
-        // Invalid credentials, redirect back to the login page with an error message
-        header('Location: index.php?error=1');
-        exit();
+        // Fetch user data from the database based on the entered username
+        $conn = new DatabaseConnection();
+        $connection = $conn->getConnection();
+
+        $sql = "SELECT * FROM users WHERE IsAdministrator = ? LIMIT 1";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        // Validate user credentials
+        if ($user && password_verify($password, $user['Password'])) {
+            // Set a session variable to indicate that the user is logged in
+            $_SESSION['user_id'] = $user['userId'];
+            $_SESSION['user_type'] = $user['UserType'];
+
+            // Redirect to the dashboard
+            header('Location: dashboard.php');
+            exit();
+        } else {
+            // Invalid credentials, redirect back to the login page with an error message
+            header('Location: index.php?error=1');
+            exit();
+        }
     }
 }
 ?>

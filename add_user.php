@@ -70,11 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <textarea name="address"></textarea><br>
 
         <input type="submit" name="add_user" value="Add User">
+
+        <label for="is_admin">Administrator:</label>
+        <input type="checkbox" name="is_admin">
+
     </form>
     
-    <!-- Checkbox to designate the user as an administrator -->
-    <label for="is_admin">Administrator:</label>
-        <input type="checkbox" name="is_admin">
 
     <a href="manageuser.php">Back to Manage Other Users</a>
 </body>
