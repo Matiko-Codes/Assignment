@@ -1,27 +1,58 @@
 <?php
 session_start();
 
-// Include necessary files
 require_once('connection.php');
 
-// Create an instance of DatabaseConnection
-$conn = new DatabaseConnection();
-$connection = $conn->getConnection();
+function authenticateUser($username, $password) {
+    $dbConnection = new DatabaseConnection();
+    $conn = $dbConnection->getConnection();
 
-// Check if the Super_User is already logged in, redirect to dashboard if true
-if (isset($_SESSION['super_user'])) {
-    header('Location: dashboard.php');
-    exit();
+    $query = "SELECT * FROM users WHERE User_Name = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        var_dump($user);
+
+        if (password_verify($password, $user['Password'])) {
+            $_SESSION['user_type'] = $user['UserType'];
+            $_SESSION['user_id'] = $user['userId'];
+
+            switch ($user['UserType']) {
+                case 'SuperUser':
+                    header('Location: super_user_dashboard.php');
+                    break;
+                case 'Administrator':
+                    header('Location: admin_dashboard.php');
+                    break;
+                case 'Author':
+                    header('Location: author_dashboard.php');
+                    break;
+                default:
+                    echo "Unknown user type!";
+                    break;
+            }
+
+            exit();
+        }
+    }
+
+    return false;
 }
 
-$sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ? AND (UserType = 'Administrator' OR IsAdministrator = 1)";
-$stmt = $connection->prepare($sql);
-$stmt->bind_param('ss', $username, $password);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-
+    if (authenticateUser($username, $password)) {
+        // Authentication successful - user redirected in authenticateUser function
+    } else {
+        echo "Invalid username or password";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,18 +60,21 @@ $user = $result->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Login</title>
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="login.php" method="post">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
+<h1>Login</h1>
 
-        <input type="submit" value="Login">
-    </form>
+<form method="post">
+    <label for="username">Username:</label>
+    <input type="text" name="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Login</button>
+</form>
+
 </body>
 </html>
