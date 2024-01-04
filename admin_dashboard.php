@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Administrator'
 
 <!-- Buttons for Administrator -->
 <ul>
-    <li><a href="update_profile.php">Update Profile</a></li>
+    <li><a href="admin_update_profile.php">Update Profile</a></li>
     <li><a href="manage_authors.php">Manage Authors</a></li>
     <li><a href="view_articles.php">View Articles</a></li>
     <li><a href="logout.php">Logout</a></li>
