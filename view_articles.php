@@ -34,7 +34,7 @@ function getLast6Articles() {
 $last6Articles = getLast6Articles();
 
 // Determine the dashboard based on user type
-$dashboardPage = ($_SESSION['user_type'] === 'SuperUser') ? 'super_user_dashboard.php' : 'admin_dashboard.php';
+$dashboardPage = $_SESSION['user_type'] . '_dashboard.php';
 ?>
 
 <!DOCTYPE html>
