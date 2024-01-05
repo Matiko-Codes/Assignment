@@ -1,5 +1,6 @@
 <?php
 session_start();
+echo '<link rel="stylesheet" type="text/css" href="css/authorupdateprofile.css">';
 
 // Check if the user is logged in as an Author
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Author') {

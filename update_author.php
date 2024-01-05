@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+echo '<link rel="stylesheet" type="text/css" href="CSS/updateauthor.css">';
+
 // Check if the user is logged in as an Administrator
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Administrator') {
     header('Location: index.php');

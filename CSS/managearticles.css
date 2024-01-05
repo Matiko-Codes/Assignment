@@ -1,0 +1,89 @@
+body {
+    background-color: #ffffff;
+    color: #333333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #173177;
+}
+
+h2 {
+    color: #173177;
+}
+
+form {
+    max-width: 600px;
+    margin: auto;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #173177;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #173177;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #173177;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #001f3f;
+}
+
+div {
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #173177;
+}
+
+p {
+    color: #333333;
+}
+
+form button[name="edit_article"],
+form button[name="delete_article"] {
+    background-color: #ffffff;
+    color: #173177;
+    border: 1px solid #173177;
+    margin-right: 10px;
+}
+
+form button[name="edit_article"]:hover,
+form button[name="delete_article"]:hover {
+    background-color: #173177;
+    color: #ffffff;
+}
+
+a {
+    display: block;
+    text-align: center;
+    color: #173177;
+    text-decoration: none;
+    margin-top: 20px;
+}
